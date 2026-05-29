@@ -18,7 +18,7 @@ func init() {
 			return target.GetOrRegisterAura(core.Aura{
 				Label:     "Annihilator",
 				ActionID:  core.ActionID{SpellID: 16928},
-				Duration:  8 * time.Second,
+				Duration:  45 * time.Second,
 				MaxStacks: 3,
 				OnStacksChange: func(aura *core.Aura, sim *core.Simulation, oldStacks int32, newStacks int32) {
 					aura.Unit.AddStatDynamic(sim, stats.Armor, -200.0*float64(newStacks-oldStacks))
@@ -36,7 +36,7 @@ func init() {
 			ThreatMultiplier: 1,
 
 			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-				result := spell.CalcOutcome(sim, target, spell.OutcomeMeleeSpecialHit)
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
 				if result.Landed() {
 					debuffAura := annihilatorDebuffAuras.Get(target)
 					debuffAura.Activate(sim)
